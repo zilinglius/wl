@@ -12,13 +12,13 @@ import java.security.Principal;
 @EnableAutoConfiguration
 public class BookController {
 
-    @RequestMapping(value = "/book/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/books/{id}", method = RequestMethod.GET)
     public Book getBook(@PathVariable int id){
 
         return Library.lib.get(id);
     }
 
-    @RequestMapping(value = "/book/{id}", method = RequestMethod.POST, consumes = "Application/json")
+    @RequestMapping(value = "/books/{id}", method = RequestMethod.POST, consumes = "Application/json")
     @PreAuthorize("hasRole('ROLE_ADMIN') or #book.getOwner() == authentication.name")
     public Book updateBook(@PathVariable int id, @RequestBody Book book){
 
@@ -27,7 +27,7 @@ public class BookController {
         return Library.lib.get(id);
     }
 
-    @RequestMapping(value = "/book", method = RequestMethod.PUT, consumes = "Application/json")
+    @RequestMapping(value = "/books", method = RequestMethod.PUT, consumes = "Application/json")
     public Book createBook(@RequestBody Book book, Principal principal) {
 
         book.setOwner(principal.getName());
@@ -37,7 +37,7 @@ public class BookController {
         return Library.lib.get(book.getId());
     }
 
-    @RequestMapping(value = "/book/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/books/{id}", method = RequestMethod.DELETE)
     public Book deleteBook(@PathVariable int id) {
 
         return Library.lib.remove(id);
